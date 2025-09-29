@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "930235766139",
+    "project_id": "kusuma-5e297",
+    "storage_bucket": "kusuma-5e297.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930235766139:android:a6ebd8d0e0790b43a899de",
+        "android_client_info": {
+          "package_name": "com.example.aplikasiordal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930235766139-a6kpogdbqd6t4h8tavkipdgsd5478nk0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aplikasiordal",
+            "certificate_hash": "bbc2bb1253a4b7b6d9b33ac4adffac851d99fa4c"
+          }
+        },
+        {
+          "client_id": "930235766139-98lu32nq9d9sndg0aeco0mghjid9ms9v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_zEPd6nw5Q3PZTM65MbQ4t3SbxTOmci0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930235766139-98lu32nq9d9sndg0aeco0mghjid9ms9v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
