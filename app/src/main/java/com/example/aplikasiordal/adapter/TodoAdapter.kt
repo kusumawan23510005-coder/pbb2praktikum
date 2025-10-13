@@ -1,7 +1,6 @@
 package com.example.aplikasiordal.adapter
 
 import android.annotation.SuppressLint
-import android.service.autofill.Dataset
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +10,16 @@ import com.example.aplikasiordal.entitiy.Todo
 class TodoAdapter(
     private val dataset: MutableList<Todo>
 ) : RecyclerView.Adapter<TodoAdapter.CustomViewHolder>() {
+
+    inner class CustomViewHolder(val view: ItemTodoBinding)
+        : RecyclerView.ViewHolder(view.root) {
+
+        fun bindData(data: Todo) {
+            view.judul.text = data.title
+            view.deskripsi.text = data.description
+        }
+    }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,9 +36,9 @@ class TodoAdapter(
 
     override fun onBindViewHolder(
         holder: CustomViewHolder,
-        position: Int
+        index: Int
     ) {
-        val data = dataset[position]
+        val data = dataset[index]
         holder.bindData(data)
     }
 
@@ -38,14 +47,7 @@ class TodoAdapter(
     /**
      * class custom view
      */
-    inner class CustomViewHolder(val view: ItemTodoBinding)
-        : RecyclerView.ViewHolder(view.root) {
 
-        fun bindData(item: Todo) {
-            view.title.text = item.title
-            view.description.text = item.description
-        }
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newData: List<Todo>) {

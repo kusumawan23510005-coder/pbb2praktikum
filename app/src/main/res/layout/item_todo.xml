@@ -5,22 +5,20 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    >
+    android:layout_marginBottom="10dp">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/judul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Memancing di dermaga"
-        />
+        android:text="pergi memnacing"/>
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/deskripsi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/title"
-        android:text="jkashdjahsd asdjahsdjhajsdhjahsd jgfjhsjdfhsdf jsdfhjshdfjshdf sdfhjsdfhjsdhfsdf jsdhfjhsdfj"/>
+        android:layout_below="@+id/judul"
+        android:text="dari jam 6 pagi ke 6 sore"/>
 
 </RelativeLayout>

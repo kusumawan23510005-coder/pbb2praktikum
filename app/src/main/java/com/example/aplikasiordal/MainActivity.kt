@@ -1,9 +1,7 @@
 package com.example.aplikasiordal
 
 import android.content.Intent
-import android.media.session.MediaSession.Token
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +11,8 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.NoCredentialException
 import androidx.lifecycle.lifecycleScope
-import com.example.aplikasiordal.R
-import com.example.aplikasiordal.TodoActivity
 import com.example.aplikasiordal.databinding.ActivityMainBinding
+import com.example.aplikasiordal.TodoActivity
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.Firebase
@@ -102,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login Berhasil", Toast.LENGTH_LONG).show()
-                    toMymyPage()
+                    toTodoPage()
                 } else {
                     Toast.makeText(this, "Login Gagal", Toast.LENGTH_SHORT).show()
                 }
@@ -116,11 +113,11 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (isAuthenticated()) {
-            toMymyPage()
+            toTodoPage()
         }
     }
 
-    private fun toMymyPage() {
+    private fun toTodoPage() {
         val intent = Intent(this, TodoActivity::class.java)
         startActivity(intent)
         finish()

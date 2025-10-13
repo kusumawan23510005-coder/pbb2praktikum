@@ -24,9 +24,27 @@ class TodoUseCase {
                 }
             }
 
-            return arrayListOf<Todo>();
+            return arrayListOf();
         } catch (exc: Exception) {
             throw Exception(exc.message)
         }
+    }
+
+    suspend fun createTodo(todo: Todo): Todo {
+        val data = hashMapOf(
+            "title" to todo.title,
+            "description" to todo.description
+         )
+
+        try{
+            val docRef = db.collection ("todo")
+                .add(data)
+                .await()
+
+            return todo.copy(id= docRef.id)
+        }catch (exc: Exception){
+            throw Exception(exc.message)
+        }
+
     }
 }
