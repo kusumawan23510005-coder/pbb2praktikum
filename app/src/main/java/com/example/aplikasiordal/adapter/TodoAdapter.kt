@@ -8,8 +8,15 @@ import com.example.aplikasiordal.databinding.ItemTodoBinding
 import com.example.aplikasiordal.entitiy.Todo
 
 class TodoAdapter(
-    private val dataset: MutableList<Todo>
+    private val dataset: MutableList<Todo>,
+    private val events : TodoItemEvents
 ) : RecyclerView.Adapter<TodoAdapter.CustomViewHolder>() {
+
+    interface TodoItemEvents {
+        fun onDelete(todo: Todo)
+        fun onEdit(todo: Todo)
+    }
+
 
     inner class CustomViewHolder(val view: ItemTodoBinding)
         : RecyclerView.ViewHolder(view.root) {
@@ -17,6 +24,17 @@ class TodoAdapter(
         fun bindData(data: Todo) {
             view.judul.text = data.title
             view.deskripsi.text = data.description
+
+            //eh ketika misal ada user yang click item todo tolong kasih tau aku
+            view.root.setOnLongClickListener {
+                events.onDelete(data)
+                true
+            }
+
+            view.root.setOnClickListener{
+                events.onEdit(data)
+            }
+
         }
     }
 

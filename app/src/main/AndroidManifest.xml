@@ -15,6 +15,10 @@
         android:theme="@style/Theme.AplikasiOrdal"
         tools:targetApi="31">
 
+
+        <activity
+            android:name=".EditTodoActivity"
+            android:exported="false"/>
         <activity
             android:name=".CreateTodoActivity"
             android:exported="false"/>

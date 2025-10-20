@@ -1,42 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF8E7"
+    android:padding="12dp"
     tools:context=".TodoActivity">
 
+    <!-- Judul Halaman -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daftar Catatan"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#D84343"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
+
+    <!-- Loading View -->
+    <ProgressBar
+        android:id="@+id/uiLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="10dp"
-        tools:listitem="@layout/item_todo"
-        tools:itemCount=""
-        />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"/>
 
-    <ProgressBar
-        android:id="@+id/ui_loading"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        />
-
+    <!-- Tombol Tambah Todo -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="Navigate to create Todo"
-        android:padding="20dp"
-        android:layout_margin="20dp"
-        android:src="@android:color/background_dark"
         android:id="@+id/TombolCreateTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="Tambah Todo"
+        app:backgroundTint="#D84343"
+        app:tint="@android:color/white"/>
 
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        />
-
-
-</RelativeLayout>
+</LinearLayout>

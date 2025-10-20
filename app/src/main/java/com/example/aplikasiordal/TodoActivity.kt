@@ -3,10 +3,15 @@ package com.example.aplikasiordal
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplikasiordal.adapter.TodoAdapter
 import com.example.aplikasiordal.databinding.ActivityTodoBinding
+import com.example.aplikasiordal.entitiy.Todo
+
 import com.example.aplikasiordal.usecases.TodoUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,16 +29,19 @@ class TodoActivity : AppCompatActivity() {
         binding = ActivityTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // INISIALISASI ADAPTER DULU
+        setupRecyclerView()
 
-        adapter = TodoAdapter(mutableListOf())
-        binding.container.layoutManager = LinearLayoutManager(this)
-        binding.container.adapter = adapter
-
+        // BARU PASANG KE RECYCLER VIEW
+        binding.container.apply {
+            layoutManager = LinearLayoutManager(this@TodoActivity)
+            adapter = this@TodoActivity.adapter
+        }
 
         loadTodos()
-
         registerEvents()
     }
+
 
     private fun registerEvents() {
         binding.TombolCreateTodo.setOnClickListener{
@@ -42,7 +50,7 @@ class TodoActivity : AppCompatActivity() {
             finish()
         }
     }
-
+                //initializeData
     private fun loadTodos() {
         binding.uiLoading.visibility = View.VISIBLE
 
@@ -60,4 +68,48 @@ class TodoActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun setupRecyclerView() {
+        adapter = TodoAdapter(mutableListOf(), object : TodoAdapter.TodoItemEvents {
+            override fun onDelete(todo: Todo) {
+                val builder = AlertDialog.Builder(this@TodoActivity)
+                builder.setTitle("Konfirmasi Hapus Data")
+                builder.setMessage("Apakah kamu yakin ingin menghapus todo ini?")
+
+                builder.setPositiveButton("Ya") { dialog, _ ->
+                    lifecycleScope.launch {
+                        try {
+                            todoUseCase.deleteTodo(todo.id)
+                            displayMessage("Data berhasil dihapus")
+                            loadTodos() // refresh data
+                        } catch (exc: Exception) {
+                            displayMessage("Gagal menghapus data: ${exc.message}")
+                        }
+                    }
+                    dialog.dismiss()
+                }
+
+                builder.setNegativeButton("Tidak") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val  dialog = builder.create()
+                dialog.show()
+            }
+
+            override fun onEdit(todo: Todo) {
+                val intent = Intent( this@TodoActivity, EditTodoActivity::class.java)
+                intent.putExtra("todo.item,id",todo.id)
+                startActivity(intent)
+            }
+        })
+
+    }
+
+
+    private fun displayMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+
+
 }

@@ -21,7 +21,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class  MainActivity : AppCompatActivity() {
     // 1. buat binding dari main activity
     private lateinit var binding: ActivityMainBinding
     private lateinit var credentialManager: CredentialManager
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
             firebaseLoginCallback(idToken.idToken)
 
-        } catch (exc: NoCredentialException) {
+         } catch (exc: NoCredentialException) {
             Toast.makeText(this, "Login gagal : " + exc.message, Toast.LENGTH_LONG).show()
         } catch (exc: Exception) {
             Toast.makeText(this, "Login gagal : " + exc.message, Toast.LENGTH_LONG).show()
