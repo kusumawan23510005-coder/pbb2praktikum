@@ -71,6 +71,7 @@ class TodoActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         adapter = TodoAdapter(mutableListOf(), object : TodoAdapter.TodoItemEvents {
+
             override fun onDelete(todo: Todo) {
                 val builder = AlertDialog.Builder(this@TodoActivity)
                 builder.setTitle("Konfirmasi Hapus Data")
@@ -98,7 +99,7 @@ class TodoActivity : AppCompatActivity() {
 
             override fun onEdit(todo: Todo) {
                 val intent = Intent( this@TodoActivity, EditTodoActivity::class.java)
-                intent.putExtra("todo.item,id",todo.id)
+                intent.putExtra("todo.item.id",todo.id)
                 startActivity(intent)
             }
         })
@@ -107,9 +108,15 @@ class TodoActivity : AppCompatActivity() {
 
 
     private fun displayMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@TodoActivity, message, Toast.LENGTH_SHORT).show()
     }
 
+
+
+    override fun onResume() {
+        super.onResume()
+        loadTodos()
+    }
 
 
 }
