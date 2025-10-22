@@ -41,21 +41,31 @@ class CreateTodoActivity : AppCompatActivity() {
     }
 
     private fun saveDataToFirestore() {
+        val title = binding.title.text.toString().trim()
+        val description = binding.description.text.toString().trim()
+
+        if (title.isEmpty() || description.isEmpty()) {
+            Toast.makeText(this, "Judul dan deskripsi tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val todo = Todo(
             id = "",
-            title = binding.title.text.toString(),
-            description = binding.description.text.toString()
+            title = title,
+            description = description
         )
 
         lifecycleScope.launch {
-            todoUseCase.createTodo(todo)
-
-            Toast.makeText(this@CreateTodoActivity, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show()
-
-
-            toTodoListActivity()
+            try {
+                todoUseCase.createTodo(todo)
+                Toast.makeText(this@CreateTodoActivity, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show()
+                toTodoListActivity()
+            } catch (e: Exception) {
+                Toast.makeText(this@CreateTodoActivity, "Gagal menambahkan: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
+
 
     private fun toTodoListActivity() {
         val intent = Intent(this, TodoActivity::class.java)

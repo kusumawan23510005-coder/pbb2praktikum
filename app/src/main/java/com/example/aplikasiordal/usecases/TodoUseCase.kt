@@ -58,10 +58,11 @@ class TodoUseCase {
         )
 
         try {
-            db.collection("todo")
+       val data = db.collection("todo")
                 .document(todo.id)
                 .set(payload)
                 .await()
+
         } catch (exc: Exception) {
             throw Exception(exc.message)
         }

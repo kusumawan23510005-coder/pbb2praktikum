@@ -2,12 +2,16 @@ package com.example.aplikasiordal
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.aplikasiordal.databinding.ActivityEditTodoBinding
+import com.example.aplikasiordal.entitiy.Todo
 import com.example.aplikasiordal.usecases.TodoUseCase
 import kotlinx.coroutines.launch
 
@@ -36,27 +40,68 @@ class EditTodoActivity : AppCompatActivity() {
 
         // Inisialisasi use case
         todoUseCase = TodoUseCase()
+
+        loadTodo()
+        registerEvent()
+
+
     }
 
-    private fun loadTodo() {
+    fun loadTodo() {
         lifecycleScope.launch {
-            val todo = todoUseCase.getTodo(todoItemId)
+            val data = todoUseCase.getTodo(todoItemId)
 
-            if (todo == null) {
+            if (data == null) {
                 // Jika data tidak ditemukan, kembali ke TodoActivity
                 val intent = Intent(this@EditTodoActivity, TodoActivity::class.java)
                 startActivity(intent)
+                displayMessage("Data task yang akan di edit tidak tersedia di server")
+                back()
                 finish()
-            } else {
-                // Set data ke input field
-                binding.title.setText(todo.title)
-                binding.description.setText(todo.description)
+
             }
+
+                binding.title.setText(data?.title)
+                binding.description.setText(data?.description)
+
         }
     }
+
+    fun back() {
+        val intent = Intent (this, TodoActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun displayMessage(message: String){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun onStart() {
         super.onStart()
         loadTodo()
+    }
+
+    fun registerEvent(){
+        binding.tombolUpdate.setOnClickListener{
+            lifecycleScope.launch {
+                val title = binding.title.text.toString()
+                val description = binding.description.text.toString()
+                val payload = Todo (
+                    id = todoItemId,
+                    title = title,
+                    description = description
+                )
+
+                try {
+                    todoUseCase.updateTodo(payload)
+                    displayMessage("Berhasil memperbarui data")
+                    back()
+                }catch (exc: Exception){
+                    displayMessage("Gagal memperbarui data task :${exc.message}")
+                }
+            }
+        }
     }
 }
